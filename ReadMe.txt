@@ -23,6 +23,13 @@ Main - Main Page with misc options
 Morphs - View the morphs of a selected Actor
 Mods - View the mods that have called this framework
 
+<Adjusted Mods>
+Baka Fill Her Up (Pain in the ASS!)
+Milk Mod Economy
+Transformative Elixers
+
+I will add more to this later. I'm not exactly sure what other mods adjust these.
+
 <For Modders>
 Please perform any and all modifications to the morphID on your mod. Send the value to mine via the below. 
 My mod will only apply it, track the mod and allow user to change how much influence your mod affects the morphs of the game actors 
