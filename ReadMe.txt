@@ -1,4 +1,6 @@
-Nefaram Inflation Framewoork
+Nefaram Inflation Framework
+
+For the love of yours, your neighbors, your unborn children's god, please point out any faults or improvements.
 
 <Intro>
 
