@@ -242,7 +242,7 @@ Event OnOptionSliderAccept(int a_option, float a_value) ; NEED TO ADD A QUEUE TO
         string sliderIDModName = JMap_getNthKey(modInfluenceSliderIDs, i)
         int sliderID = JMap_getInt(modInfluenceSliderIDs, sliderIDModName)
         string modInfluenceModName
-        if sliderID == a_option
+        if sliderID == a_option            
             modInfluenceModName = JArray_getStr(allRegisteredMods, i)
             NIF_MainRef.QueueModInfluenceUpdate(modInfluenceModName, a_value)
             MiscUtil.PrintConsole("Sent ModInfluence Update")
@@ -255,6 +255,8 @@ Event OnOptionSliderAccept(int a_option, float a_value) ; NEED TO ADD A QUEUE TO
         string minModMorphID = JMap_getNthKey(minMorphIDRangeSliderIDs, k) ; Get slider Name
         int sliderID = JMap_getInt(minMorphIDRangeSliderIDs, minModMorphID) ; Get slider INT based on name
         if sliderID == a_option ; Is the int the same as a_option?
+            int tempArray = JMap_getObj(NIF_MainRef.morphIDRange, minModMorphID)
+            JArray_setFlt(tempArray, 0, a_value)
             NIF_MainRef.QueueMorphIDRangeUpdate(minModMorphID, a_value, 0)
             MiscUtil.PrintConsole("Sent Morph ID Range Update")
         endIf
@@ -266,6 +268,8 @@ Event OnOptionSliderAccept(int a_option, float a_value) ; NEED TO ADD A QUEUE TO
         string maxModMorphID = JMap_getNthKey(maxMorphIDRangeSliderIDs, k) ; Get slider Name
         int sliderID = JMap_getInt(maxMorphIDRangeSliderIDs, maxModMorphID) ; Get slider INT based on name        
         if sliderID == a_option ; Is the int the same as a_option?
+            int tempArray = JMap_getObj(NIF_MainRef.morphIDRange, maxModMorphID)
+            JArray_setFlt(tempArray, 1, a_value)
             NIF_MainRef.QueueMorphIDRangeUpdate(maxModMorphID, a_value, 1)
             MiscUtil.PrintConsole("Sent Morph ID Range Update")
         endif

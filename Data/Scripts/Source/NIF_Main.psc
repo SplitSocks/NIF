@@ -232,7 +232,7 @@ Function ProcessMorphIDRangeQueue()
         int QueueUpdateArrayMorphRangeArrayInfo = JArray_getObj(QueueUpdateArrayMorphRange, 0)
         string morphID = JArray_getStr(QueueUpdateArrayMorphRangeArrayInfo, 0)
         float morphValue = JArray_getFlt(QueueUpdateArrayMorphRangeArrayInfo, 1)
-        int minOrmax = JArray_getInt(QueueUpdateArrayMorphRangeArrayInfo, minOrMax, 2)
+        int minOrmax = JArray_getInt(QueueUpdateArrayMorphRangeArrayInfo, 2)
         if morphID != ""
             int morphRangeArray = JMap_getObj(morphIDRange, morphID)
             if minorMax == 0
@@ -342,25 +342,25 @@ float Function getModInfluence (string modName)
 endFunction
 
 ; Helper function for GetCombinedMorphValue || Adjusts the incoming total value to the morphID Range
-float Function GetTotalValueAdjustedbyMorphRange(string morphID, float Value)
+float Function GetTotalValueAdjustedbyMorphRange(string morphID, float value)
     int arrayMorphIDRange
     float morphID_min = -1.0
     float morphID_max = 4.0
     if JMap_hasKey(morphIDRange, morphID)
         arrayMorphIDRange = JMap_getObj(morphIDRange, morphID)
-        morphID_min = JArray_getFlt(arrayMorphIDRange, 0)
-        morphID_max = JArray_getFlt(arrayMorphIDRange, 1)
+        morphID_min = JArray_getFlt(arrayMorphIDRange, 0) ; Retreive the MIN from array
+        morphID_max = JArray_getFlt(arrayMorphIDRange, 1) ; Retreive the MAX from array
     Else ; Create the array if it doesn't exist
         arrayMorphIDRange = JArray_object() ; Create a new JArray
         JValue_retain(arrayMorphIDRange) ; Retain the new JArray
         JArray_addFlt(arrayMorphIDRange, morphID_min) ; Add min to array
         JArray_addFlt(arrayMorphIDRange, morphID_max) ; Add max to array
         JMap_setObj(morphIDRange, morphID, arrayMorphIDRange) ; Store the new array in the JMap
-    endif
+    endif    
+    ; Clamp the value within the range of min and max
     if value < morphID_min
         value = morphID_min
-    endif
-    if value > morphID_max
+    elseif value > morphID_max
         value = morphID_max
     endif
     return value
