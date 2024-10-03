@@ -31,7 +31,7 @@ Mods - View the mods that have called this framework
 
 <Adjusted Mods>
 Baka Fill Her Up (Pain in the ASS!)
-Milk Mod Economy
+Milk Mod Economy (I highly recommend enabling volumetric in their settings)
 Transformative Elixers
 
 I will add more to this later. I'm not exactly sure what other mods adjust these.
