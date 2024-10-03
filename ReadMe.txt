@@ -40,7 +40,6 @@ Registered Mods:
 Registered Morphs"
 	Lists all the MorphIDs affected.
 	This also lets you adjust the MIN and MAX value each morph ID.
-	This displays all ORIGINAL values. Mod Influence is not calculated here.
 
 <Included Adjusted Mods>
 Please let me know if I missed any in the Nefaram Mod List
