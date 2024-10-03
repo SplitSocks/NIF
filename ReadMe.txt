@@ -14,6 +14,10 @@ This is a body type agnostic inflation framework. It 100% doesn't give two shits
 
 Any MorphIDs that don't exsist will still be tracked adding some bloat. This is the major downside. How big that bloat is depends on if you're crazy enough to have different body mods. This could be mitigated if I tracked down all body mods, pulled their IDs and put them in a JSON for parsong. I'd rather not.
 
+<What it doesn't do>
+As of now, this doesn't work mid game. You need to start over completely or just not care about the morphs starting over. 
+Alternatively you can use transformative elixers to a degree to get them where you were initially.
+
 <The Guts>
 Freely view the source scripts and let me know what you believe should be changed/added. (I may go git route later)
 
