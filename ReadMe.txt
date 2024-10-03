@@ -1,4 +1,4 @@
-Morphmancy - An Inflation Framework
+Nimorphus - An Inflation Framework
 <Intro>
 
 Hello.
