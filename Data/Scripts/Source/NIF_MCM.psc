@@ -20,6 +20,10 @@ string menuIDActorSelectDisplayName
 string selectedActorFormIDallRegisteredMods
 int selectedActorInt
 
+int modInfluenceUpdate
+int morphIDMinUpdate
+int morphIDMaxUpdate
+
 
 Event OnInit()
     parent.oninit()
@@ -36,35 +40,63 @@ Event OnConfigInit()
 EndEvent
 
 event OnConfigOpen()
-    MiscUtil.PrintConsole(modInfluenceSliderIDs + " modInfluenceSliderIDs")
-    MiscUtil.PrintConsole(minMorphIDRangeSliderIDs + " minMorphIDRangeSliderIDs")
-    MiscUtil.PrintConsole(maxMorphIDRangeSliderIDs + " maxMorphIDRangeSliderIDs")
-    MiscUtil.PrintConsole(allRegisteredMods + " allRegisteredMods")
-
     if  !JValue_isExists(modInfluenceSliderIDs)
         modInfluenceSliderIDs = JMap_object()
         JValue_retain(modInfluenceSliderIDs)
-        MiscUtil.PrintConsole(modInfluenceSliderIDs + " new modInfluenceSliderIDs")
+        ;MiscUtil.PrintConsole(modInfluenceSliderIDs + " new modInfluenceSliderIDs")
     endif
     if !JValue_isExists(minMorphIDRangeSliderIDs)
         minMorphIDRangeSliderIDs = JMap_object()
         JValue_retain(minMorphIDRangeSliderIDs)
-        MiscUtil.PrintConsole(minMorphIDRangeSliderIDs + " new minMorphIDRangeSliderIDs")
+        ;MiscUtil.PrintConsole(minMorphIDRangeSliderIDs + " new minMorphIDRangeSliderIDs")
     endif
     if !JValue_isExists(maxMorphIDRangeSliderIDs)
         maxMorphIDRangeSliderIDs = JMap_object()
         JValue_retain(maxMorphIDRangeSliderIDs)
-        MiscUtil.PrintConsole(maxMorphIDRangeSliderIDs + " new  maxMorphIDRangeSliderIDs")
+        ;MiscUtil.PrintConsole(maxMorphIDRangeSliderIDs + " new  maxMorphIDRangeSliderIDs")
     endif
     if !JValue_isExists(allRegisteredMods)        
         allRegisteredMods = JMap_allKeys(NIF_MainRef.modInfluence)
         JValue_retain(allRegisteredMods)
-        MiscUtil.PrintConsole(allRegisteredMods + " new allRegisteredMods")
+        ;MiscUtil.PrintConsole(allRegisteredMods + " new allRegisteredMods")
+    endif
+    if  !JValue_isExists(modInfluenceUpdate)
+        modInfluenceUpdate = JMap_object()
+        JValue_retain(modInfluenceUpdate)
+        ;MiscUtil.PrintConsole(modInfluenceUpdate + " new modInfluenceUpdate")
+    endif
+    if  !JValue_isExists(morphIDMinUpdate)
+        morphIDMinUpdate = JMap_object()
+        JValue_retain(morphIDMinUpdate)
+        ;MiscUtil.PrintConsole(morphIDMinUpdate + " new morphIDMinMaxUpdate")
+    endif
+    if  !JValue_isExists(morphIDMaxUpdate)
+        morphIDMaxUpdate = JMap_object()
+        JValue_retain(morphIDMaxUpdate)
+        ;MiscUtil.PrintConsole(morphIDMaxUpdate + " new morphIDMinMaxUpdate")
     endif
 endEvent
 
 event OnConfigClose()
-    
+    while Utility.IsInMenuMode()
+        Utility.Wait(1.0) ; Wait for 1 second and check again
+    endwhile
+    int minCount = JMap_count(morphIDMinUpdate)
+    int maxCount = JMap_count(morphIDMaxUpdate)
+    int i = 0
+    int j = 0
+    while i < minCount
+        string morphID = JMap_getNthKey(morphIDMinUpdate, i)
+        float a_value = JMap_getFlt(morphIDMinUpdate, morphID)
+        NIF_MainRef.QueueMorphIDRangeUpdate(morphID, a_value, 0)
+        i += 1
+    endWhile
+    while j < maxCount
+        string morphID = JMap_getNthKey(morphIDMaxUpdate, j)
+        float a_value = JMap_getFlt(morphIDMaxUpdate, morphID)
+        NIF_MainRef.QueueMorphIDRangeUpdate(morphID, a_value, 1)
+        j += 1
+    endWhile
 endEvent
 
 Event OnPageReset(string page)
@@ -180,7 +212,7 @@ Event OnOptionSliderOpen(int a_option)
     while i < maxModCount
         string modInfluenceModName = JMap_getNthKey(modInfluenceSliderIDs, i)
         int sliderID = JMap_getInt(modInfluenceSliderIDs, modInfluenceModName)
-        MiscUtil.PrintConsole(sliderID + " sliderID was found under ModInfluenceSliders")
+        ;MiscUtil.PrintConsole(sliderID + " sliderID was found under ModInfluenceSliders")
         if sliderID == a_option       
             float currentModInfluence = JMap_getFlt(NIF_MainRef.modInfluence, modInfluenceModName)
             ; Set the slider range and default values dynamically
@@ -198,9 +230,9 @@ Event OnOptionSliderOpen(int a_option)
     while j < countMinMorphIDs
         string minModMorphID = JMap_getNthKey(minMorphIDRangeSliderIDs, j) ; Get slider Name
         int sliderID = JMap_getInt(minMorphIDRangeSliderIDs, minModMorphID) ; Get slider INT based on name
-        MiscUtil.PrintConsole(sliderID + " sliderID was found under Min Sliders")
+        ;MiscUtil.PrintConsole(sliderID + " sliderID was found under Min Sliders")
         if sliderID == a_option ; Is the int the same as a_option?
-            MiscUtil.PrintConsole(sliderID + " sliderID")
+            ;MiscUtil.PrintConsole(sliderID + " sliderID")
             int morphArray = JMap_getObj(NIF_MainRef.morphIDRange, minModMorphID)
             float currentMinMorphValue = JArray_getFlt(morphArray, 0)
             ; Set the slider range and default values dynamically
@@ -218,9 +250,9 @@ Event OnOptionSliderOpen(int a_option)
     while k < countMaxMorphIDs
         string maxModMorphID = JMap_getNthKey(maxMorphIDRangeSliderIDs, k) ; Get slider Name
         int sliderID = JMap_getInt(maxMorphIDRangeSliderIDs, maxModMorphID) ; Get slider INT based on name
-        MiscUtil.PrintConsole(sliderID + " sliderID was found under Max Sliders")
+        ;MiscUtil.PrintConsole(sliderID + " sliderID was found under Max Sliders")
         if sliderID == a_option ; Is the int the same as a_option?
-            MiscUtil.PrintConsole(sliderID + " sliderID")
+            ;MiscUtil.PrintConsole(sliderID + " sliderID")
             int morphArray = JMap_getObj(NIF_MainRef.morphIDRange, maxModMorphID)
             float currentMaxMorphValue = JArray_getFlt(morphArray, 1)
             ; Set the slider range and default values dynamically
@@ -245,7 +277,7 @@ Event OnOptionSliderAccept(int a_option, float a_value) ; NEED TO ADD A QUEUE TO
         if sliderID == a_option            
             modInfluenceModName = JArray_getStr(allRegisteredMods, i)
             NIF_MainRef.QueueModInfluenceUpdate(modInfluenceModName, a_value)
-            MiscUtil.PrintConsole("Sent ModInfluence Update")
+            ;MiscUtil.PrintConsole("Sent ModInfluence Update")
         endif
         i += 1        
     endwhile
@@ -257,8 +289,9 @@ Event OnOptionSliderAccept(int a_option, float a_value) ; NEED TO ADD A QUEUE TO
         if sliderID == a_option ; Is the int the same as a_option?
             int tempArray = JMap_getObj(NIF_MainRef.morphIDRange, minModMorphID)
             JArray_setFlt(tempArray, 0, a_value)
-            NIF_MainRef.QueueMorphIDRangeUpdate(minModMorphID, a_value, 0)
-            MiscUtil.PrintConsole("Sent Morph ID Range Update")
+            JMap_setFlt(morphIDMinUpdate, minModMorphID, a_value)
+            ;NIF_MainRef.QueueMorphIDRangeUpdate(minModMorphID, a_value, 0)
+            ;MiscUtil.PrintConsole("Sent Morph ID Range Update")
         endIf
         j = 1
     endWhile
@@ -270,8 +303,9 @@ Event OnOptionSliderAccept(int a_option, float a_value) ; NEED TO ADD A QUEUE TO
         if sliderID == a_option ; Is the int the same as a_option?
             int tempArray = JMap_getObj(NIF_MainRef.morphIDRange, maxModMorphID)
             JArray_setFlt(tempArray, 1, a_value)
-            NIF_MainRef.QueueMorphIDRangeUpdate(maxModMorphID, a_value, 1)
-            MiscUtil.PrintConsole("Sent Morph ID Range Update")
+            JMap_setFlt(morphIDMaxUpdate, maxModMorphID, a_value)
+            ;NIF_MainRef.QueueMorphIDRangeUpdate(maxModMorphID, a_value, 1)
+            ;MiscUtil.PrintConsole("Sent Morph ID Range Update")
         endif
         k += 1
     endWhile

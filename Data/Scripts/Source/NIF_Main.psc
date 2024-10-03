@@ -71,11 +71,10 @@ function loadJContainerReferences()
     endif  
 endfunction
 
-
 ; ========== Main Process Line ==========
 ; Listener for events from external mods
 Event OnExternalModEvent(Form kActor, String morphID, String keyName, float value, int replaceOrUpdate)
-    MiscUtil.PrintConsole("Event received from external mod for actor: " + kActor + " with morphID: " + morphID + " from mod " + keyName + " with value " + value)
+    ;MiscUtil.PrintConsole("Event received from external mod for actor: " + kActor + " with morphID: " + morphID + " from mod " + keyName + " with value " + value)
     ; Ensure the actor is valid before queuing the update
     if kActor != None
         QueueUpdate(kActor, morphID, keyName, value, replaceOrUpdate)
@@ -123,9 +122,9 @@ Function ProcessQueue()
         endif
         if morphID != ""
             UpdateTrackedMorphs(kActor, morphID, keyName, value, replaceOrUpdate)       
-            MiscUtil.PrintConsole("Updated actor morph ID from mod") 
+            ;MiscUtil.PrintConsole("Updated actor morph ID from mod") 
             if JArray_findForm(queuedActors, kActor) == -1
-                MiscUtil.PrintConsole("Added Actor to Array")
+                ;MiscUtil.PrintConsole("Added Actor to Array")
                 JArray_addForm(queuedActors, kActor)
             endif
         else
@@ -136,7 +135,7 @@ Function ProcessQueue()
         Utility.Wait(0.1)
     endwhile
     While JArray_count(queuedActors) > 0
-        MiscUtil.PrintConsole("Started Actor update")
+        ;MiscUtil.PrintConsole("Started Actor update")
         form kActorForm = JArray_getForm(queuedActors, 0)
         Actor kActor = kActorForm as Actor
         UpdateSpecificActorMorphs(kActor)
@@ -197,7 +196,7 @@ Function ProcessModInflucenQueue()
         float modValue = JArray_getFlt(QueueModInfluenceUpdateArrayInfo, 1)    
         if modName != ""
             JMap_setFlt(modInfluence, modName, modValue)            
-            MiscUtil.PrintConsole("Updated ModInfluence " + modName)
+            ;MiscUtil.PrintConsole("Updated ModInfluence " + modName)
         else
             MiscUtil.PrintConsole("Warning: Empty modName encountered.")
         endif
@@ -240,7 +239,7 @@ Function ProcessMorphIDRangeQueue()
             elseif minOrMax == 1
                 JArray_setFlt(morphRangeArray, minOrmax, morphValue)
             endif
-            MiscUtil.PrintConsole("Updated MorphID " + morphID)
+            ;MiscUtil.PrintConsole("Updated MorphID " + morphID)
         else
             MiscUtil.PrintConsole("Warning: Empty modName encountered.")
         endif        
@@ -290,7 +289,7 @@ Function UpdateSpecificActorMorphs(actor kActor)
             string morphIDFound = JMap_getNthKey(mapMorphID, j)
             float newValue = GetCombinedMorphValue(kActor, morphIDFound)
             UpdateActorMorphs(kActor, morphIDFound, "NIF ModInfluenceUpdate", newValue)
-            MiscUtil.PrintConsole("Updated Actor "+kactor+" with morph ID "+morphIDFound)
+            ;MiscUtil.PrintConsole("Updated Actor "+kactor+" with morph ID "+morphIDFound)
             j += 1
         endwhile
     endif
