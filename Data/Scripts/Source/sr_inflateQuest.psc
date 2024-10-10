@@ -2489,7 +2489,7 @@ Function SetNodeScale(Actor akActor, string nodeName, float value)
 	if (akActor)
 		if (Game.GetModbyName("SexLab Inflation Framework.esp") != 255)
 			SLIF_inflate(akActor, nodeName, value)
-		elseif (Game.GetModbyName("Nefarm Inflation Framework") !=255)
+		elseif (Game.GetModbyName("Nimorphus") !=255)
 			QueueUpdate(akActor, nodeName, FHU_KEY, value, 0)
 		else
 			bool isFemale = akActor.GetLeveledActorBase().GetSex() == 1
@@ -2521,7 +2521,7 @@ Function RemoveNodeScale(Actor akActor, string nodeName)
 	if (akActor)
 		if (Game.GetModbyName("SexLab Inflation Framework.esp") != 255)
 			SLIF_unregisterNode(akActor, nodeName)
-		elseif (Game.GetModbyName("Nefarm Inflation Framework") !=255)
+		elseif (Game.GetModbyName("Nimorphus") !=255)
 			; do nothing
 		endIf		
 		bool isFemale = akActor.GetLeveledActorBase().GetSex() == 1

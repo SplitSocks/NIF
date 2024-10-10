@@ -38,7 +38,6 @@ Function QueueUpdate(Actor kActor, String morphID, String modKey, float value)
 		ModEvent.PushInt(queueUpdateEvent, 0)
 		ModEvent.Send(queueUpdateEvent)
 	EndIf
-	MiscUtil.PrintConsole("MME_BodyMod has sent a change for " + morphID)
 EndFunction
 
 Function RemoveNiONodeScale(Actor akActor, string nodeName, bool isFemale)
