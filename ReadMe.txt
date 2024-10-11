@@ -1,5 +1,3 @@
-https://github.com/SplitSocks/NIF
-
 Nimorphus - An Inflation Framework
 
 Welcome to Nimorphus, a flexible inflation framework.
